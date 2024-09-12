@@ -1,0 +1,540 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kiosk Layout</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700;800&family=Orbit&display=swap"
+        rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            font-family: "Nanum Myeongjo", sans-serif;
+            font-weight: 700;
+            font-style: normal;
+        }
+
+        html {
+            font-size: 10px;
+            /* 1rem = 10px */
+        }
+
+        h1,
+        p {
+            color: rgb(127, 149, 127);
+        }
+
+        .inputText {
+            padding-top: 13rem;
+            font-size: 3rem;
+        }
+
+        .inputArea {
+            padding-top: 5rem;
+            font-size: 4rem;
+        }
+
+        header {
+            height: 10rem;
+            font-size: 3rem;
+            padding-left: 20rem;
+            padding-top: 10rem;
+        }
+
+        main {
+            height: calc(100% - 20rem);
+        }
+
+        div>p {
+            text-align: center;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            width: 192rem;
+            height: 108rem;
+            margin: 0 auto;
+            background-color: rgb(245, 238, 230);
+            position: relative;
+        }
+
+        div[class$="Area"] {
+            width: 150rem;
+            display: flex;
+            justify-content: space-evenly;
+            margin: auto;
+        }
+
+        .payButtonArea {
+            display: flex;
+            flex-wrap: wrap;
+            /* 버튼이 넘치면 줄바꿈 */
+            justify-content: space-between;
+            /* 버튼 간의 공간 균등 분배 */
+            width: 50%;
+            /* 부모 컨테이너 크기에 맞게 조정 */
+            max-width: 40rem;
+            /* 원하는 최대 크기 */
+            height: auto;
+            /* 높이는 자동으로 조정 */
+            padding: 2rem;
+            /* 여백을 줄 수 있음 */
+            margin: auto;
+            /* border: 1px solid red; */
+        }
+
+        .btnText {
+            width: 12rem;
+            height: 7rem;
+        }
+
+        button {
+            width: 23rem;
+            height: 11rem;
+            border-radius: 5rem;
+            font-size: 3rem;
+            border: none;
+            background-color: rgb(248, 248, 248);
+        }
+
+        .submitBtn {
+            width: 10rem;
+            height: 5rem;
+            border-radius: 5rem;
+            font-size: 3rem;
+        }
+
+        .pageButtonArea {
+            width: 80%;
+            /*border: 1px solid brown;*/
+            height: 13rem;
+            padding-top: 7rem;
+        }
+
+        .modal {
+            display: none;
+            /* 기본적으로는 숨김 */
+            position: absolute;
+            z-index: 1;
+            left: 10rem;
+            top: -3rem;
+            width: 170rem;
+            height: 100rem;
+            background-color: rgb(245, 238, 230);
+            /* 반투명한 배경 */
+        }
+
+        .modal-content {
+            background-color: rgb(255, 252, 244);
+            margin: 15% auto;
+            padding: 20px;
+            border-radius: 2rem;
+            border: 1px solid #888;
+            width: 90rem;
+            height: 70rem;
+            text-align: center;
+            font-size: 2rem;
+        }
+
+        .modal-content>p {
+            font-size: 4rem;
+            line-height: 10rem;
+        }
+
+        .modal-content p:nth-of-type(2) {
+            font-size: 2rem;
+            line-height: 3rem;
+        }
+
+        .close {
+            font-size: 28px;
+            border-radius: 2rem;
+            font-weight: bold;
+            margin-top: 3rem;
+            cursor: pointer;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .bcGray {
+            background-color: rgb(221, 221, 221);
+        }
+
+        .bcOrange {
+            background-color: rgb(243, 215, 202);
+        }
+
+        .cOrange {
+            color: rgb(242, 185, 172);
+        }
+
+        .subTitle {
+            width: 192rem;
+            font-size: 6rem;
+            padding: 5rem 0 5rem 0;
+        }
+
+        .boxSize {
+            width: 15rem;
+            /* 버튼의 너비를 적절하게 조정 */
+            height: 15rem;
+            margin: 2rem;
+            /* 버튼 간격 추가 */
+            border-radius: 2rem;
+            font-size: 3rem;
+            border: none;
+            background-color: rgb(248, 248, 248);
+        }
+
+        .border {
+            border: 1px solid red;
+        }
+
+        .imgBox {
+            width: 90rem;
+            height: 45rem;
+        }
+
+        img {
+            padding-top: 7rem;
+        }
+
+        .printBtn {
+            width: 40px;
+            height: 30px;
+            border: 1px solid red;
+        }
+
+        .printBtnArea {
+            float: right;
+        }
+
+        .modal-content-receipt {
+            background-color: rgb(255, 252, 244);
+            margin: 15% auto;
+            padding: 20px;
+            border-radius: 2rem;
+            border: 1px solid #888;
+            width: 50rem;
+            height: 75rem;
+            text-align: center;
+            font-size: 2rem;
+        }
+
+        h2 {
+            color: gold;
+            line-height: 10rem;
+            font-size: 6rem;
+        }
+
+        h3 {
+            font-size: 3rem;
+        }
+
+        .alignLeft {
+            text-align: left;
+        }
+
+        .items {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            color: rgb(127, 149, 127);
+        }
+
+        .items th,
+        .items td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: right;
+            /* 숫자 금액은 오른쪽 정렬 */
+            border: none;
+        }
+
+        .items td:first-child {
+            text-align: left;
+        }
+
+        .items th {
+            background-color: #f2f2f2;
+            text-align: center;
+            /* 제목은 왼쪽 정렬 */
+        }
+
+        .totals td {
+            font-weight: bold;
+        }
+
+        .barcode {
+            width: 50rem;
+            height: 7rem;
+            background-image: url('barcodeImage.png');
+            background-size: contain;
+
+        }
+
+        .receiptCloseBtn {
+            width: 5rem;
+            height: 5rem;
+            background-color: rgb(255, 252, 244);
+            position: absolute;
+            left: 105rem;
+            top: 30rem;
+            font-size: 5rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>축의금 결제창</h1>
+        </header>
+
+        <main class="main">
+            <div class="card">
+                <p class="subTitle cOrange">결제</p>
+                <div class="payButtonArea">
+                    <button type="button" class="boxSize" id="cashBtn" >현금</button>
+                    <button type="button" class="boxSize" id="cardBtn" >카드</button>
+                    <button type="button" class="boxSize" id="kakaoBtn" >카카오페이</button>
+                    <button type="button" class="boxSize" id="naverBtn">네이버페이</button>
+
+                </div>
+                <div class="pageButtonArea">
+                    <button class="bcGray" onclick="location.href='file:///C:/Users/LINE/develop/kiosk05page.html'">이전으로</button>
+                    <button class="bcOrange">선택완료</button>
+                </div>
+            </div>
+        </main>
+        <!-- 카드 입력-->
+        <div id="cardInputModal" class="modal" data-modal = "cardButton">
+            <div class="modal-content">
+
+                <p>신용/체크카드</p>
+                <p> 그림과 같이 카드를 넣어주세요<br>
+                    (IC 칩이 단말기에 투입되도록 넣어주세요)<br>
+                </p>
+                <p></p>
+                <div class="imgBox"><img src="cardImage.PNG" alt="cardImage"></div>
+
+                <div class="close" id="closeCard">취소</div>
+            </div>
+        </div>
+
+        <div id="cashInputModal" class="modal" data-modal = "cashButton">
+            <div class="modal-content">
+                <p>현금</p>
+                <p> 입금하실 금액을 아래와 같이 넣어주세요<br>
+                </p>
+                <div class="imgBox"><img src="cashImage.PNG" alt="cashImage"></div>
+
+                <div class="close" id="closeCash">취소</div>
+            </div>
+        </div>
+
+        <div id="kakaoInputModal" class="modal" data-modal = "kakaoPayButton">
+            <div class="modal-content">
+                <p>카카오페이</p>
+                <p> 아래 QR코드를 찍어주세요<br>
+                </p>
+                <div class="imgBox"><img src="kakaoQR.png" alt="kakaoQR"></div>
+
+                <div class="close" id="closeKakao">취소</div>
+            </div>
+        </div>
+
+        <div id="naverInputModal" class="modal" data-modal = "naverPayButton">
+            <div class="modal-content">
+                <p>네이버페이</p>
+                <p> 아래 QR코드를 찍어주세요<br>
+                </p>
+                <div class="imgBox"><img src="naverQR.png" alt="naverQR"></div>
+
+                <div class="close" id="closeNaver">취소</div>
+            </div>
+        </div>
+
+        <div id="payCompleteModal" class="modal">
+            <div class="modal-content">
+                <p>결제완료</p>
+                <p>
+                    결제금액 : <span id="inputMoneyValue">100,000</span><br>
+                </p>
+                <div class="imgBox"><img src="payCompleteImage.PNG" alt="payCompleteImage"></div>
+                <button class="bcGray" onclick="location.href='page05.html'">영수증 미출력</button>
+                <button class="bcGray" id="showReceiptBtn" onclick="showReceiptEvent()">영수증 출력</button>
+            </div>
+        </div>
+
+        <div id="showReceiptModal" class="modal">
+            <div class="modal-content-receipt">
+                <div id="receiptContent"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        class ModalController{
+            constructor(id){
+                this.id = id;
+                this.timeoutId = null;
+                this.modals = document.querySelectorAll('.modal');
+                this.closeButtons = document.querySelectorAll('.close');
+                this.payCompleteModal = document.getElementById('payCompleteModal');
+                this.initModal();
+            }
+            initModal(){
+                this.settingModal();
+            }
+            settingModal(){
+                document.getElementById('cardBtn').addEventListener('click', ()=>{ this.showModal('cardInputModal');  });
+                document.getElementById('cashBtn').addEventListener('click', ()=>{ this.showModal('cashInputModal');  });
+                document.getElementById('kakaoBtn').addEventListener('click', ()=>{ this.showModal('kakaoInputModal') });
+                document.getElementById('naverBtn').addEventListener('click', ()=>{ this.showModal('naverInputModal') });
+                
+                this.closeButtons.forEach(button =>{
+                    button.addEventListener('click',()=>{
+                        const modal = button.closest('.modal');
+                        if(modal){
+                            this.hideModal(modal.id);
+                            clearTimeout(this.timeoutId);
+                        }
+                    })
+
+                })
+            }
+            resetTimeout(){
+                if(this.timeoutId){
+                    clearTimeout(this.timeout);
+                }
+            }
+            showModal(modalId){
+                const modal = document.getElementById(modalId);
+                if(modal){
+                    modal.style.display = 'block';
+                    this.timeoutId = setTimeout(() => { 
+                        this.payCompleteModal.style.display = "block" }, 1000);
+
+                }
+            }
+            hideModal(modalId){
+                const modal = document.getElementById(modalId);
+                if(modal){
+                    modal.style.display = 'none';
+                }
+            }
+        }
+        const kiosk = new ModalController('kiosk');
+	
+	let payMethod = document.querySelectorAll('.boxSize');
+	let payMethodText = '';
+        payMethod.forEach(button => {
+                button.addEventListener('click', ()=>{
+                payMethodText = button.textContent;
+                })
+        })
+	console.log(payMethodText);
+        const showReceiptEvent = () => {
+		const storedValue = localStorage.getItem('storedValue');
+		let trimValue = storedValue.replace(/원/,"");
+
+
+            receiptContent.innerHTML = `
+        <h2>Wedding</h2><button class="receiptCloseBtn" id="receiptCloseBtn">&times;</button>
+        <h3>www.wedding.co.kr</h3>
+        <p>------------------------------------</p>
+        <div>
+            <p class="alignLeft">라인웨딩홀</p>
+            <p class="alignLeft">관리자 : 홍길동</p>
+            <p class="alignLeft">TEL : 031-xxx-xxxx</p>
+        </div>
+        <p>------------------------------------</p>
+        <p class="alignLeft">[정상] ${new Date().toLocaleDateString()} &nbsp; ${new Date().toLocaleTimeString()}</p>
+        <p>------------------------------------</p>
+	<table class="items">
+            <thead>
+                <tr>
+                    <th>제품명</th>
+                    <th>수량</th>
+                    <th>금액</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>001 축의금</td>
+                    <td></td>
+			<td id="receiptStoreValue">${trimValue}</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+        <p>------------------------------------</p>
+        <table class="items totals">
+            <tbody>
+                <tr>
+                    <td>총 매출액</td>
+                    <td></td>
+                    <td>${trimValue}</td>
+                </tr>
+                <tr>
+                    <td>합계금액</td>
+                    <td></td>
+                    <td>${trimValue}</td>
+                </tr>
+            </tbody>
+        </table>
+        <p>------------------------------------</p>
+        <table class="items">
+            <tbody>
+                <tr>
+		    <td id="payMethodValue">[${payMethodText}]</td>
+                    <td></td>
+                    <td>${trimValue}</td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="barcode"></div>
+    `;
+
+            showReceiptModal.style.display = "block";
+            const receiptCloseBtn = document.getElementById('receiptCloseBtn');
+            receiptCloseBtn.addEventListener('click', () => {
+                location.href = 'page05.html';
+            });
+
+        }
+  	
+	document.addEventListener('DOMContentLoaded', ()=>{
+                const storedValue = localStorage.getItem('storedValue');
+                document.getElementById('inputMoneyValue').textContent = `${storedValue}`;
+        }) 	
+
+    </script>
+</body>
+
+</html>
