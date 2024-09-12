@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700;800&family=Orbit&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbit&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
+    <title>weddingKiosk</title>
+    <style>
+       * { 
+            margin: 0; padding: 0; font-size: 10px; 
+            font-family: "Nanum Myeongjo", serif;
+            font-weight: 700;
+            font-style: normal;
+        }
+        html, body { width: 192rem; height: 108rem; margin: auto;}
+        .enterYourPhoneNumberFrame {
+            width: 100%;
+            height: 100%;
+            background-color: #f5eee6;
+            align-items: center;
+        }
+
+        .enterYourPhoneNumberInputFrmae {
+            width: 120rem;
+            height: 90rem;
+            background-color: darkgray;
+            text-align: center;
+            border-radius: 10rem;
+            margin: auto;
+        }
+            .PhonNumberInput { /*위쪽 입력된 화면 보여지는 칸 및 예시 제목*/
+                width: 60rem;
+                height: 8rem;
+                border-radius: 30rem;
+                font-size: 3rem;
+                text-align: center;
+            }
+            .fontSize {
+                font-size: 5rem;
+            } 
+            .exampleFontSize {
+                font-size: 2rem;
+            }
+            .padding {
+                padding: 1rem;
+            }
+
+/*
+            .enterYourPhoneNumberKeypadFrame {
+                width: 120rem;
+                height: 70rem;
+                background-color: darkgray;
+                margin: auto;
+            }
+*/
+            .keyPadFrame {
+                display: grid;
+                grid-template-columns: repeat(3,12rem);
+                width: 40rem;
+                height: 60rem;
+                margin: auto;
+                text-align: center;
+            }
+
+            .keyPadFrame button {
+                width: 11rem;
+                height: 11rem;
+                font-size: 4rem;
+                margin: 0.5rem;
+                border-radius: 2rem;
+                color: #7F957F;
+
+            }
+            button[data-value*="back"] {
+                font-size: 4rem;
+                color: #E79267;
+            }
+            button[data-value*="reset"] {
+                font-size: 4rem;
+                color: #E79267;
+            }
+            button[data-value*="inputSuccess"] {
+                font-size: 4rem;   
+                width: 35rem;
+            }
+            i[class*="rotate"] {
+               font-size: 4rem; 
+            }
+
+    </style>
+    <body>
+        <main class="enterYourPhoneNumberFrame">
+            <div class="enterYourPhoneNumberInputFrmae">
+                <h1 class="telmePhonNumber fontSize padding">전화번호 11자리 입력 후, '확인' 버튼을 눌러주세요</h1>
+                <form>
+                    <input id="number" class="PhonNumberInput padding" type="text" readonly placeholder="ex)010-xxxx-xxxx">
+                </form>
+                <p class="examplePhonNumber exampleFontSize padding">주차권, 옷 대여를 위해 입력해주세요</p>
+            <div class="enterYourPhoneNumberKeypadFrame">
+                <div class="keyPadFrame">
+                    <button data-value="1">1</button>
+                    <button data-value="2">2</button>
+                    <button data-value="3">3</button>
+                    
+                    <button data-value="4">4</button>
+                    <button data-value="5">5</button>
+                    <button data-value="6">6</button>
+                    <button data-value="7">7</button>
+                    <button data-value="8">8</button>
+                    <button data-value="9">9</button>
+                    <button data-value="back">정정<i data-value="back" class="xi-caret-up xi-rotate-270"></i></button>
+                    <button data-value="0">0</button>
+                    <button data-value="reset">전체삭제</button>
+                    <button data-value="inputSuccess">입력완료</button>
+                </div>
+            </div>
+            </div>
+        </main>
+    <script>
+        class PhonNumberKeyPad {
+            constructor( id ) {
+                this.id = id;
+
+            }
+            setting(targetDom) {
+                class Stack {
+                    constructor( id ) {
+                        this.id = id;
+                        this.storage = [];
+                    }
+                    pushItem( item ) {
+                        this.storage.push( item );
+                    }   
+                    popItem() {
+                        return this.storage.pop();
+                    }
+                }
+                const numberArea = new Stack('numberArea');
+                 let check = true;
+                 let displaycheck = false;
+                targetDom.addEventListener(
+                'click',
+                (event)=>{
+                    if(displaycheck){
+                        document.getElementById('number').value = '';
+                        displaycheck = false;
+                    }
+                    if(
+                        event.target.dataset.value !== undefined &&
+                        event.target.dataset.value !== "reset" &&
+                        event.target.dataset.value !== "back" &&
+                        event.target.dataset.value !== "inputSuccess"
+                    
+                    ){
+                        numberArea.pushItem(event.target.dataset.value);
+                        let value = 0;
+
+                        value = `${event.target.dataset.value}`;
+                        this.display(value,check);
+
+                        console.log(numberArea.storage);
+                         if(numberArea.storage.length > 11){
+                            check = false;
+                            numberArea.storage = [];
+                            this.display("전화번호 양식을 맞춰주세요!",check);
+                            check = true;
+                            displaycheck = true;
+                         }
+                    }
+
+                    switch(event.target.dataset.value) {
+                        case "back": {
+                            numberArea.popItem();
+                            console.log(numberArea.storage);
+                            const A = numberArea.storage.join('');
+                            check = false;
+                            this.display(A,check);
+                            check = true;
+                            break;
+                        }
+                        case "inputSuccess": {
+                            let totalNumber = '';
+                            let length = numberArea.storage.length;
+                            const phonNumber = numberArea.storage.join('');
+                            totalNumber += phonNumber.substring(0,3) + '-';
+                            totalNumber += phonNumber.substring(3,7) + '-';
+                            totalNumber += phonNumber.substring(7,11);
+                            if(/^01([016789]?)-?([0-9]{3,4})-?([0-9]{3,4})/.test(totalNumber)){
+                                console.log(totalNumber);
+                                check = false;
+                                this.display("이용해주셔서 감사합니다.",check);
+                                numberArea.storage = [];
+                                check = true;
+                                displaycheck = true;
+
+                            }else{
+                                /*check = false;*/
+                                for(let i=0; i<length; i++){
+                                    numberArea.popItem();
+                                }
+                                check = false;
+                                this.display("전화번호 양식을 맞춰주세요!",check);
+                                check = true;
+                                displaycheck = true;
+                            }
+                            break;
+                        }
+                        case "reset": {
+                            numberArea.storage = [];
+                            check = false;
+                            this.display('',check);
+                            check = true;
+                        }
+                    }
+                }
+                );
+
+            }
+            display(value,check) {
+                if(check){
+                    document.getElementById('number').value += value;
+                }else{
+                    document.getElementById('number').value = value;
+
+                }
+            }
+            controle(targetDom) {
+             this.setting(targetDom);   
+            }
+        }
+
+        const phonNumberKeyPad = new PhonNumberKeyPad('phonNumberKeyPad');
+        phonNumberKeyPad.controle(document.querySelector('.keyPadFrame'));
+        
+    </script>
+    </body>
+</head>
+</html>
