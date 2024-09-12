@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!--폰트-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
+
+    <title>Wedding_Kiosk_관리자화면 2</title>
+    <style>
+        *{
+            margin: 0; padding: 0;
+            font-family: "Noto Sans KR", sans-serif;
+            font-optical-sizing: auto;
+            font-weight: 400;
+            font-style: normal;
+        }
+        html{
+            font-size: 10px;
+        }
+        main{
+            width: 192rem;
+            height: 108rem;
+            background-color: #434B3C;
+            position: absolute;
+            left: 50%;
+            margin-left: -96rem;
+            border: 1px solid red;
+            color: white;
+        }
+        header{
+            width: 192rem;
+            height: 18rem;
+            border: 1px solid blue;
+        }
+        section{
+            width: 192rem;
+            height: 60rem;
+        }    
+        .headerP{
+            font-size: 5rem;
+            margin-left: 3rem;
+        }
+        .topCover{
+            width: 192rem;
+            height: 40rem;
+            border: 1px solid green;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10rem;
+        }
+        .bottomCover{
+            width: 192rem;
+            height: 40rem;
+            border: 1px solid salmon;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10rem;
+        }
+        .managerBtn{
+            width: 30rem;
+            height: 20rem;
+            border-radius: 50%;
+            background-color: white;
+            font-size: 4rem;
+            border: 5px solid #2A3124;
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <header>
+            <p class="headerP">관리자 메인화면</p>
+            <button id="homeBtn" class="homeBtn"><i class="homeIcon"></i></button>
+        </header>
+        <section>
+            <div class="topCover">
+                <button class="managerBtn">부부 정보 설정</button>
+                <button class="managerBtn">결혼식장<br>정보 관리</button>
+                <button class="managerBtn">하객 정보 관리</button>
+            </div>
+            <div class="bottomCover">
+                <button class="managerBtn">식권 관리</button>
+                <button class="managerBtn">주차권 관리</button>
+                <button class="managerBtn">옷 대여 관리</button>
+            </div>
+        </section>
+        <button><i class></i></button>
+    </main>
+    <script>
+        /*
+        document.querySelector('.managerBtn').addEventListener(
+        'click',
+        ()=>{
+            location.href='';
+        }
+        );*/
+    </script>
+</body>
+</html>

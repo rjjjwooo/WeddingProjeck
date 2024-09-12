@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!--폰트-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
+
+
+    <title>Wedding_Kiosk_관리자화면 1</title>
+    <style>
+        *{
+            margin: 0; padding: 0;
+            font-family: "Noto Sans KR", sans-serif;
+            font-optical-sizing: auto;
+            font-weight: 400;
+            font-style: normal;
+        }
+        html{
+            font-size: 10px;
+        }
+        main{
+            width: 192rem;
+            height: 108rem;
+            background-color: #434B3C;
+            position: absolute;
+            left: 50%;
+            margin-left: -96rem;
+            border: 1px solid red;
+            color: white;
+        }
+        header{
+            width: 192rem;
+            height: 18rem;
+            border: 1px solid blue;
+        }
+        .headerP{
+            font-size: 5rem;
+            margin-left: 3rem;
+        }
+        .homeBtn {
+            position: absolute;
+            border: 0;
+            background-color: transparent;
+            top: 4rem;
+            left: 179rem;
+        }
+        section{
+            width: 192rem;
+            height: 90rem;
+            font-size: 4rem;
+            border: 1px solid green;
+        } 
+        .loginInputCover{
+            width: 192rem;
+            height: 45rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 3rem;
+            border: 1px solid brown;
+        }
+        .loginInput{
+            width: 40rem;
+            height: 10rem;
+            border: 5px solid #2A3124;
+            font-size: 4rem;
+            text-align: right;
+            border-radius: 3rem;
+            outline: 0;
+        }
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        .loginBtnCover{
+            width: 192rem;
+            height: 20rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        .loginBtn{
+            width: 70rem;
+            height: 10rem;
+            font-size: 5rem;
+            text-align: center;
+            border-radius: 3rem;
+        }
+
+        .systeminformationpopup{
+            text-align: center;
+            display: none;
+        }
+
+        
+    </style>
+</head>
+<body>
+    <main>
+        <header>
+            <p class="headerP">관리자 로그인</p>
+            <button id="homeBtn" class="homeBtn"><img src="/kiosk/home.png"></button>
+        </header>
+        <section>
+            <div class="loginInputCover">
+                <label>ID: &nbsp<input type="number" id="IDinput" class="loginInput" placeholder="ex)1234"></label>
+                <label>PW: <input type="number" id="PWinput" class="loginInput" placeholder="ex)1234"></label> 
+            </div>
+            <div class="loginBtnCover">
+                <button id="loginBtn" class="loginBtn">로그인</button>
+            </div>
+            <p class="systeminformationpopup">아이디 혹은 비밀번호가 일치하지 않습니다.</p>
+        </section>
+    </main>
+<script>
+    class Systeminformation {
+        constructor( id ) {
+            this.id = id;
+            this.idValue = "1234";
+            this.pwValue = "1234";
+        }
+        setting( targetDom ) {
+            class Stack {
+            constructor( id ) {
+                this.id = id;
+                this.storage = [];
+            }
+            pushItem( item ) {
+                this.storage.push( item );
+            }
+            popItem() {
+                return this.storage.pop();
+            }
+            }
+            const area = {
+                id:'',
+                pw:''
+            };
+            const idStack = new Stack('idStack');
+            const pwStack = new Stack('pwStack');
+            let idValue = '';
+            let pwValue = '';
+            targetDom.addEventListener(
+            'input',
+            (event)=>{
+            switch(event.target.id) {
+                case 'IDinput': {
+                    idStack.storage = [];
+                    area.id = event.target.value;
+                    idStack.pushItem(area.id);
+                    //console.log(idStack.storage[0].length);
+                    if(idStack.storage[0].length < 5){
+                        idValue = idStack.popItem();
+                    }else{
+                        document.getElementById(event.target.id).value = '';
+                    }
+                    //if(/^(\d{3,4})&/.test(area.id) && )       
+                    break;
+                }
+                case 'PWinput': {
+                    pwStack.storage = [];
+                    area.pw = event.target.value;
+                    pwStack.pushItem(area.pw);
+                    if(pwStack.storage[0].length < 5){
+                        pwValue = pwStack.popItem();
+                        console.log(pwValue);
+                    }else{
+                        document.getElementById(event.target.id).value = '';
+                    }
+                    break;
+                }
+            }
+            }
+            );
+            document.getElementById('loginBtn').addEventListener(
+            'click',
+            ()=>{
+                if(idValue === this.idValue && idValue === this.pwValue){
+                    location.href = 'page\(관리자 메인화면\).html';
+                }else{
+                    document.getElementById('IDinput').value = '';
+                    document.getElementById('PWinput').value = '';
+                    document.querySelector('.systeminformationpopup').style.display = "block";
+                }                    
+            }
+            );
+            document.getElementById('homeBtn').addEventListener(
+            'click',
+            ()=>{
+                location.href= 'page01.htmlt';
+            }
+            );
+        }
+    control( targetDom ) {
+            this.setting(targetDom);
+        }
+    }
+    const systeminformation = new Systeminformation('systeminformation');
+    systeminformation.control(document.querySelector('.loginInputCover'));
+    
+</script>
+</body>
+</html>
