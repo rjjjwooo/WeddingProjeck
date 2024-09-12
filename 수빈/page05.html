@@ -1,0 +1,225 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kiosk Layout</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700;800&family=Orbit&display=swap"
+        rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            font-family: "Nanum Myeongjo", sans-serif;
+            font-weight: 700;
+            font-style: normal;
+        }
+
+        html {
+            font-size: 10px;
+            /* 1rem = 10px */
+        }
+
+        h1 {
+            color:#eda784;
+        }
+
+	p {
+	    color: #E79267;
+	}
+
+        .inputText {
+            padding-top: 13rem;
+            font-size: 3rem;
+        }
+
+        .inputArea {
+            padding-top: 5rem;
+            font-size: 4rem;
+        }
+
+        header {
+            height: 10rem;
+            font-size: 3rem;
+            padding-left: 20rem;
+            padding-top: 10rem;
+        }
+
+        main {
+            height: calc(100% - 20rem);
+        }
+
+        div>p {
+            text-align: center;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            width: 192rem;
+            height: 108rem;
+            margin: 0 auto;
+            background-color: rgb(245, 238, 230);
+            position: relative;
+        }
+
+        div[class$="Area"] {
+            width: 150rem;
+            display: flex;
+            justify-content: space-evenly;
+            margin: auto;
+        }
+
+        .buttonArea {
+            padding-top: 10rem;
+            padding-bottom: 10rem;
+        }
+
+        .inputBtnText {
+            width: 20rem;
+            height: 10rem;
+        }
+
+        button {
+            width: 23rem;
+            height: 11rem;
+            border-radius: 5rem;
+            font-size: 3rem;
+            border: none;
+	    color: #7F957F;
+            background-color: rgb(248, 248, 248);
+        }
+
+        .submitBtn {
+            width: 10rem;
+            height: 5rem;
+            border-radius: 5rem;
+            font-size: 2rem;
+        }
+
+        .pageButtonArea {
+            width: 80%;
+            /*border: 1px solid brown;*/
+            height: 13rem;
+            padding-top: 7rem;
+        }
+
+        .modal {
+            display: none; /* 기본적으로는 숨김 */
+            position: absolute;
+            z-index: 1;
+            left: 10rem;
+            top: -3rem;
+            width: 170rem;
+            height: 100rem;
+            background-color: rgb(245, 238, 230); /* 반투명한 배경 */
+        }
+
+        .modal-content {
+            background-color: rgb(255,252,244);
+            margin: 15% auto;
+            padding: 20px;
+            border-radius: 2rem;
+            border: 1px solid #888;
+            width: 90rem;
+            height: 70rem;
+            text-align: center;
+            font-size: 2rem;
+        }
+        
+        .modal-content > input { 
+            width: 20rem; 
+            height: 5rem; 
+            border-radius: 5rem;
+            text-align: center;
+            font-size: 3rem;
+            margin-left: 2rem;
+        }
+
+        .bcGray {
+            background-color: rgb(221, 221, 221);
+        }
+
+        .bcOrange {
+            background-color: rgb(244, 215, 202);
+        }
+
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>신랑에게 축의금 전달하기 ~ ❤</h1>
+        </header>
+
+        <main class="main">
+            <div class="card">
+                <p class="inputText">금액을 선택해주세요</p>
+                <p class="inputArea">입력 금액 : <button class="inputBtnText" id="inputBtnText">-</button></p>
+                <div class="buttonArea">
+                    <button type="button" onclick="moneySet('50,000원')" value="50,000원" class="moneyBtn">50,000원</button>
+                    <button type="button" onclick="moneySet('100,000원')" value="100,000원" class="moneyBtn">100,000원</button>
+                    <button type="button" onclick="moneySet('150,000원')" value="150,000원" class="moneyBtn">150,000원</button>
+                    <button type="button" onclick="moneySet('200,000원')" value="200,000원" class="moneyBtn">200,000원</button>
+                    <button type="button" onclick="showModal()">금액 입력</button>
+                </div>
+                <div class="pageButtonArea">
+                    <button class="bcGray">이전으로</button>
+                    <button class="bcOrange" onclick="location.href='page06.html'">선택완료</button>
+                </div>
+            </div>
+        </main>
+
+        <div id="showModal" class="modal">
+            <div class="modal-content">
+                <span onclick="closeModal()"></span>
+                <input type="text" id="amountInput" placeholder="금액 입력">&nbsp;&nbsp;만원
+                <button type="button" class="submitBtn" onclick="submitAmount()">제출</button>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    const inputBtnText = document.getElementById('inputBtnText');
+    const moneyBtn = document.getElementById('moneyBtn');
+    const amountInput = document.getElementById('amountInput');
+    
+    const moneySet = (value) => {
+        inputBtnText.innerHTML = value;
+	localStorage.setItem('storedValue', value); //버튼 클릭 시에 값 업데이트
+    }
+    const showModal = () => {
+        document.getElementById('showModal').style.display = 'block';
+    }
+    const closeModal = () => {
+        document.getElementById('showModal').style.display = 'none';
+    }
+
+    let selectedAmount = "";
+    const selectAmount = (value) => {
+        selectedAmount = value;
+    }
+    const submitAmount = () => {
+        let inputValueChange = Number(amountInput.value)*(10000);
+        moneySet(inputValueChange.toLocaleString() + "원");
+        closeModal();
+        
+    }
+    document.addEventListener('DOMContentLoaded', ()=>{
+	const inputBtnStore = document.getElementById('inputBtnText').textContent;
+	    console.log(inputBtnStore);
+	    localStorage.setItem('storedValue', inputBtnStore);
+    })
+
+</script>
+
+</html>
