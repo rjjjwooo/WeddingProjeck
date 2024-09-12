@@ -104,10 +104,10 @@ section {
     white-space: nowrap;
     position: relative;
     clip-path: polygon(
-        1% 0%, /* 왼쪽 상단 시작점 */
-        70% 0%, /* 오른쪽 상단 끝점 */
-        64% 100%, /* 오른쪽 하단 끝점 */
-        11% 100% /* 왼쪽 하단 시작점 */
+        0% 0%, /* 왼쪽 상단 시작점 */
+        71% 0%, /* 오른쪽 상단 끝점 */
+        66% 100%, /* 오른쪽 하단 끝점 */
+        8% 100% /* 왼쪽 하단 시작점 */
     );
 }
 
@@ -172,12 +172,24 @@ section {
     font-size: 5rem;
 }
 .home {
-    font-size: 5rem;
-    float: right;
+    position: absolute;
+    display: flex;
+    top: 4rem;
+    left: 170rem;
+    justify-content: space-around;
 }
 
+.home button {
+    border: 0;
+}
+.system { 
+    margin-right: 2rem;
+}
+
+
+
 .flower { /*꽃가루 생성*/
-    background-image: url(kiosk/flower.png);
+    background-image: url(/kiosk/flower.png);
     background-size: cover;
     background-repeat: no-repeat;
     animation: flowermove 2s linear infinite;
@@ -188,6 +200,15 @@ section {
     35% { opacity: 1;}
     100% { transform: translateY(100%) translateX(100%) rotate(30deg); opacity: 0;}
 }
+
+
+.hiddenOpen {
+    /*border: 1px solid red;*/
+    transform: translate(0,-3rem); /*margin 값도 합한 것*/
+    height: 0;
+    overflow: hidden;
+    transition: 0.5s;
+}
     </style>
 </head>
 <body>
@@ -197,7 +218,7 @@ section {
             <h1 class="weddingKioskTitle">wedding Kiosk</h1>
             <article>
                 <div class="firstImgFrame">
-                    <img class="firstImgSize" src="kiosk/wedding.png" alt="No Img">
+                    <img class="firstImgSize" src="/kiosk/wedding.png" alt="No Img">
                 </div>
                 <div class="firstNameFrame">
                     <h3 class="firstSubName">김신랑&nbsp;<span class="subName">신랑님</span>&nbsp;<i class="xi-heart firstHeart">&nbsp;</i>이신부<span class="subName">&nbsp;신부님</span></h3>
@@ -214,20 +235,31 @@ section {
         </div>        
     </main>
     
-    <main class="weddingKioskFrame"> <!--------------2 Page------------->
-        <nav class="home">관리자 설정이랑 홈 화면 들어가는 곳</nav>
+    <main class="weddingKioskFrame hiddenOpen"> <!--------------2 Page------------->
+        <nav class="home">
+            <button class="system"><img src="/kiosk/system.png"></button>
+            <button><img src="/kiosk/home.png"></button>
+        </nav>
         <section>
             <article class="homeThreeClickFrame">
                 <ul class="moneyParkingRentalFrame">
-                    <li class="CondolenceMoneyFrame"><button class="moneyBtn"><img class="CondolenceMoneyImg" src="kiosk/wedding.png"></button><p class="MoneyText">축의금</p></li>
-                    <li class="ParkingTicketFrame"><button class="parkingBtn"><img class="ParkingTicketImg" src="kiosk/wedding.png"></button><p class="ParkingText">주차권</p></li>
-                    <li class="ClothesRentalFrame"><button class="RentalBtn"><img class="ClothesRentalImg" src="kiosk/wedding.png"></button><p class="RentalText">옷 대여</p></li>
+                    <li class="CondolenceMoneyFrame"><button class="moneyBtn"><img class="CondolenceMoneyImg" src="/kiosk/wedding.png"></button><p class="MoneyText">축의금</p></li>
+                    <li class="ParkingTicketFrame"><button class="parkingBtn"><img class="ParkingTicketImg" src="/kiosk/wedding.png"></button><p class="ParkingText">주차권</p></li>
+                    <li class="ClothesRentalFrame"><button class="RentalBtn"><img class="ClothesRentalImg" src="/kiosk/wedding.png"></button><p class="RentalText">옷 대여</p></li>
                 </ul>
                     <p class="MoneyParkingRentalClickGuide" style="font-size: 5rem; ">해당 버튼을 클릭해주세요</p>
             </article>
         </section>
     </main>
 <script>
+    //클릭하면 화면 슝 생성
+    document.querySelector('.PageClick').addEventListener(
+    'click',
+    ()=>{
+        document.querySelector('.hiddenOpen').style = "height:100%; transform: translate(0,-111rem);";
+    }
+    );
+    ///////////////////////
     document.addEventListener('DOMContentLoaded',()=>{ //페이지가 로드 되면 실행 해라!
         const flowerFrame = document.getElementById('flowerFrame');
         const flowerPointer = Math.floor(Math.random() * (30 - 10) + 1) + 5;
