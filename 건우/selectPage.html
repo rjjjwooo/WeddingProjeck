@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700;800&family=Orbit&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbit&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
+    <title>Document</title>
+    <style>
+        * { 
+            margin: 0; padding: 0; font-size: 10px; 
+            font-family: "Nanum Myeongjo", serif;
+            font-weight: 700;
+            font-style: normal;
+        }
+        html, body {
+            width: 192rem;
+            height: 108rem;
+            margin: auto;
+        }
+        .weddingSettingFrame {
+            width: 100%;
+            height: 100%;
+            background-color: #434B3C;
+        }
+            .weddingSettingTitle {
+                font-size: 10rem;
+                text-align: center;
+                padding: 2rem;
+            }
+
+            .clickFrame {
+                display: flex;
+                justify-content: center;
+                margin-top: 12rem;
+            }
+            button {
+                border: none;
+                background-color: transparent;
+            }
+        .weddingClick {
+            width: 50rem;
+            height: 40rem;
+            padding: 2rem;
+            margin: 2rem;
+            text-align: center;
+            border-radius: 25rem;
+            border: 1px solid red;
+            list-style-type: none;
+            letter-spacing: 0.2rem;
+            align-content: space-evenly;
+        }
+
+        .weddingName {
+            font-size: 3rem;
+        }
+
+        .fontSize {
+            font-size: 4rem;
+        }
+
+        .yearMonthDdayFontSize {
+            font-size: 3rem;
+        }
+        .dataFontSize {
+            font-size: 2rem;
+        }
+    </style>
+</head>
+<body>
+    <main id="weddingSettingFrame" class="weddingSettingFrame">
+         <h1 class="weddingSettingTitle">찾아주신 하객 여러분들 감사드립니다.</h1>
+        <section class="clickFrame">
+            <div>
+            <ul>
+                <button><li id="0" data-value="0" class="weddingClick"></li></button>
+                <button><li id="1" data-value="1" class="weddingClick"></li></button>
+                <button><li id="2" data-value="2" class="weddingClick"></li></button>
+            </ul>
+            </div>
+        </section>
+    </main>
+<script>
+    fetch('weddingSelect.json').then(response=>{
+        if(!response.ok){
+            throw new Error("Not Connet File");
+        }
+        return response.json();
+    }).then(data=>{
+
+        const date = new Date();
+        const [year,month,dday] = [...date.toLocaleDateString().match(/\d+/g)];
+        console.log(date.toLocaleTimeString())
+        for(let i=0; i<data.length; i++){
+            document.getElementById(`${i}`).innerHTML = `
+                <span data-value='${i}' class="fontSize">신랑:${data[i].man}</span>&nbsp;<i id='${i}' style="font-size:3rem; color:red;"class="xi-heart firstHeart"></i>&nbsp;
+                <span data-value='${i}' class="fontSize">신부:${data[i].woman}</span><br><br>
+                <span data-value='${i}' class="yearMonthDdayFontSize">날짜:${year}년 ${month}월 ${dday}일</span><br><br>
+                <span data-value='${i}' class="dataFontSize">시간:${data[i].data}</span>
+                `;
+        }
+        //<img src='${data[i].manImage}'/>
+        document.querySelector('.clickFrame').addEventListener(
+        'click',
+        (click)=>{
+            e = click? click:event;
+            console.log(e.target.dataset.value);
+            switch(e.target.dataset.value){
+                case e.target.dataset.value: {
+                    localStorage.setItem("value",JSON.stringify(data[Number(e.target.dataset.value)]));
+                    window.location.href='page01.html'; 
+                    break;
+                }
+            }
+
+        }
+        );
+    }).catch(error=>{console.log("Error")});
+
+</script>
+</body>
+</html>

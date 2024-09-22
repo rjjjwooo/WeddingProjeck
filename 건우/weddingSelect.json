@@ -1,0 +1,23 @@
+[
+    {
+        "man":"김우빈",
+        "woman":"신민아",
+        "manImage":"/kiosk/김우빈.jfif",
+        "womanImage":"src='./'",
+        "data":"토요일 오전 10시 30분"
+    },
+    {
+        "man":"현빈",
+        "woman":"손예진",
+        "manImage":"/kiosk/신민아.jfif",
+        "womanImage":"src='./'",
+        "data":"토요일 오후 1시 30분"
+    },
+    {
+        "man":"지성",
+        "woman":"이보영",
+        "manImage":"/kiosk/아이유.jfif",
+        "womanImage":"src='./'",
+        "data":"토요일 오후 3시 30분"
+    }
+]
