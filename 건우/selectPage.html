@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700;800&family=Orbit&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbit&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
+    <title>Document</title>
+    <style>
+        * { 
+            margin: 0; padding: 0; font-size: 10px; 
+            font-family: "Nanum Myeongjo", serif;
+            font-weight: 700;
+            font-style: normal;
+        }
+        html, body {
+            width: 192rem;
+            height: 108rem;
+            margin: auto;
+        }
+        .weddingSettingFrame {
+            width: 100%;
+            height: 100%;
+            background-color: #434B3C;
+        }
+            .weddingSettingTitle {
+                font-size: 10rem;
+                text-align: center;
+            }
+
+            .clickFrame {
+                display: flex;
+                justify-content: center;
+
+            }
+            button {
+                border: none;
+                background-color: transparent;
+            }
+        .weddingClick {
+            width: 50rem;
+            height: 20rem;
+            padding: 2rem;
+            margin: 2rem;
+            border: 1px solid red;
+            list-style-type: none;
+        }
+
+        .weddingName {
+            font-size: 3rem;
+        }
+
+    </style>
+</head>
+<body>
+    <main id="weddingSettingFrame" class="weddingSettingFrame">
+         <h1 class="weddingSettingTitle">골라주세요</h1>
+        <section class="clickFrame">
+            <div>
+            <ul>
+                <button data-value="one"><li id="0" data-value="one" class="weddingClick"></li></button>
+                <button data-value="two"><li id="1" data-value="two" class="weddingClick"></li></button>
+                <button data-value="three"><li id="2" data-value="three" class="weddingClick"></li></button>
+            </ul>
+            <ul>
+                <button><li id="3" data-value="four" class="weddingClick"></li></button>
+                <button><li id="4" data-value="five" class="weddingClick"></li></button>
+                <button><li id="5" data-value="six" class="weddingClick"></li></button>
+            </ul>
+            </div>
+        </section>
+    </main>
+<script>
+    fetch('weddingSelect.json').then(response=>{
+        if(!response.ok){
+            throw new Error("Not Connet File");
+        }
+        return response.json();
+    }).then(data=>{
+        console.log(data);
+        for(let i=0; i<data.length; i++){
+            document.getElementById(`${i}`).innerHTML = `
+            <div class="weddingName">
+                신랑:${data[i].man} <br> 
+                신부:${data[i].woman} <br>
+                날짜:${data[i].data}
+            </div>
+                `;
+        }
+        document.querySelector('.clickFrame').addEventListener(
+        'click',
+        (click)=>{
+            e = click? click:event;
+            switch(e.target.dataset.value){
+                case e.target.dataset.value: {
+                    localStorage.setItem("value",JSON.stringify(data[Number(e.target.id)]));
+                    window.location.href='page01.html'; 
+                    break;
+                }
+            }
+
+        }
+        );
+    }).catch(error=>{console.log("Error")});
+
+</script>
+</body>
+</html>
