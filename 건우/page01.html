@@ -253,6 +253,18 @@ section {
         </section>
     </main>
 <script>
+    document.addEventListener(
+    'DOMContentLoaded',
+    ()=>{
+        const weddingTilte = JSON.parse(localStorage.getItem("value"));
+        console.log(weddingTilte);
+        document.querySelector('.firstNameFrame').innerHTML = `
+            <h3 class="firstSubName">${weddingTilte.man}&nbsp;<span class="subName">신랑님</span>&nbsp;<i class="xi-heart firstHeart"></i>&nbsp;${weddingTilte.woman}<span class="subName">&nbsp;신부님</span></h3>
+            <h4 class="firstSubSubName">${weddingTilte.data}<br>라인아트 웨딩홀 2층</h4>
+        `;
+
+    }
+    );
     //클릭하면 화면 슝 생성
     document.querySelector('.PageClick').addEventListener(
     'click',
