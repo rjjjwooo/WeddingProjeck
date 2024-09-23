@@ -258,6 +258,11 @@ section {
     ()=>{
         const weddingTilte = JSON.parse(localStorage.getItem("value"));
         console.log(weddingTilte);
+<<<<<<< HEAD
+=======
+
+        document.querySelector('.firstImgFrame').innerHTML = `<img class="firstImgSize" src='${weddingTilte.manImage}' alt="No Image"/>`;
+>>>>>>> dd9238f76b5103d4687391ae72ac3ac4b0ef9a6d
         document.querySelector('.firstNameFrame').innerHTML = `
             <h3 class="firstSubName">${weddingTilte.man}&nbsp;<span class="subName">신랑님</span>&nbsp;<i class="xi-heart firstHeart"></i>&nbsp;${weddingTilte.woman}<span class="subName">&nbsp;신부님</span></h3>
             <h4 class="firstSubSubName">${weddingTilte.data}<br>라인아트 웨딩홀 2층</h4>
